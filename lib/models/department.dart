@@ -1,16 +1,14 @@
-
 import 'package:b_erp/models/job.dart';
 import 'package:b_erp/models/person.dart';
 
 class Department {
   String name;
   List<Person> members = [];
-  Person headOfDepartment;
+  Person? headOfDepartment;
   List<Job> jobs = [];
 
   Department({
     required this.name,
-    required this.headOfDepartment,
   });
 
   // Method
@@ -32,5 +30,4 @@ class Department {
 
   resignMember(int memberID) =>
       members.removeWhere((member) => member.personID == memberID);
-  
 }

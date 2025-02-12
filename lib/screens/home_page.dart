@@ -1,3 +1,4 @@
+import 'package:b_erp/models/department.dart';
 import 'package:b_erp/models/job.dart';
 import 'package:b_erp/models/person.dart';
 import 'package:b_erp/widgets/add_department_form.dart';
@@ -18,6 +19,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Person> persons = [];
   List<Job> jobs = [];
+  List<Department> departments = [];
 
   onAddJob(String jobName, int salary) {
     Job job = Job(name: jobName, salary: salary);
@@ -31,6 +33,19 @@ class _HomePageState extends State<HomePage> {
       jobs.remove(job);
     });
   }
+
+  onAddDepartment(Department d) {
+    setState(() {
+      departments.add(d);
+    });
+  }
+  onRemoveDepartment(Department d) {
+    setState(() {
+      departments.remove(d);
+    });
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +112,11 @@ class _HomePageState extends State<HomePage> {
           ),
           ElevatedButton.icon(
               onPressed: () {
-                showDialog(context: context, builder: (context)=>const AddDepartmentForm());
+                showDialog(
+                    context: context,
+                    builder: (ctx) => AddDepartmentForm(
+                          onSaveClicked: onAddDepartment,
+                        ));
               },
               label: const Text("Add Department"),
               icon: const Icon(Icons.apartment),
@@ -124,7 +143,10 @@ class _HomePageState extends State<HomePage> {
             jobs: jobs,
             handleRemoveJob: onRemoveJob,
           ),
-          const DepartmentsTab(),
+          DepartmentsTab(
+            departments: departments,
+            handleRemoveDepartment: onRemoveDepartment,
+          ),
         ],
       ),
     );
